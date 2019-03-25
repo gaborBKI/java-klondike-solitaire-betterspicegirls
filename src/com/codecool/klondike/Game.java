@@ -13,10 +13,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Game extends Pane {
 
@@ -37,7 +34,7 @@ public class Game extends Pane {
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
         Card card = (Card) e.getSource();
-        if (card.getContainingPile().getPileType() == Pile.PileType.STOCK) {
+        if (card.getContainingPile().getPileType() == Pile.PileType.STOCK && card.equals(stockPile.getTopCard())) {
             card.moveToPile(discardPile);
             card.flip();
             card.setMouseTransparent(false);
@@ -108,17 +105,18 @@ public class Game extends Pane {
 
     public void refillStockFromDiscard() {
         //TODO
-
-        System.out.println("Stock refilled from discard pile.");
-        // Tomi added:
-        List<Card> discardList = discardPile.getCards();
-        //TODO
-        Collections.reverse(discardList);
-        for (Card card : discardList) {
-            card.flip();
-            stockPile.addCard(card);
+        if(stockPile.isEmpty()) {
+            System.out.println("Stock refilled from discard pile.");
+            // Tomi added:
+            List<Card> discardList = discardPile.getCards();
+            //TODO
+            Collections.reverse(discardList);
+            for (Card card : discardList) {
+                card.flip();
+                stockPile.addCard(card);
+            }
+            discardPile.clear();
         }
-        discardPile.clear();
         /*
         discardIterator.forEachRemaining(card -> {
             stockPile.addCard(card);
@@ -214,7 +212,7 @@ public class Game extends Pane {
         int index = shuffledDeck.size() - 1;
         for (int i=0; i<tableauPiles.size(); i++) {
             for(int j=0; j<i+1; j++) {
-                tableauPiles.get(i).addCard(shuffledDeck.get(index));
+                shuffledDeck.get(index).moveToPile(tableauPiles.get(i));
                 index--;
             }
             tableauPiles.get(i).getTopCard().flip();
