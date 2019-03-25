@@ -207,7 +207,15 @@ public class Game extends Pane {
             addMouseEventHandlers(card);
             getChildren().add(card);
         });
-
+        List<Card> shuffledDeck = stockPile.getCards();
+        int index = 0;
+        for (int i=0; i<tableauPiles.size(); i++) {
+            for(int j=0; j<i+1; j++) {
+                tableauPiles.get(i).addCard(shuffledDeck.get(index));
+                index++;
+            }
+            tableauPiles.get(i).getTopCard().flip();
+        }
     }
 
     public void setTableBackground(Image tableBackground) {
