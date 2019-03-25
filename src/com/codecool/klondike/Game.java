@@ -14,6 +14,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -107,7 +108,25 @@ public class Game extends Pane {
 
     public void refillStockFromDiscard() {
         //TODO
+
         System.out.println("Stock refilled from discard pile.");
+        // Tomi added:
+        List<Card> discardList = discardPile.getCards();
+        //TODO
+        Collections.reverse(discardList);
+        for (Card card : discardList) {
+            card.flip();
+            stockPile.addCard(card);
+        }
+        discardPile.clear();
+        /*
+        discardIterator.forEachRemaining(card -> {
+            stockPile.addCard(card);
+            // addMouseEventHandlers(card);
+            // getChildren().add(card);
+        });
+        */
+
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
