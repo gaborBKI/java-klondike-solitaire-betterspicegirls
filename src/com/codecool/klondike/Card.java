@@ -84,7 +84,7 @@ public class Card extends ImageView {
         return card1Color.equals(card2Color);
     }
 
-    //added a method that checks what color the card is based on its suit (diamond and hearts is read, other two are black
+    //added a method that checks what color the card is based on its suit (diamond and hearts is red, other two are black
 
     private static String getCardColor(Card card) {
         if (card.suit == 1 || card.suit == 2) {
