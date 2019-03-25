@@ -207,6 +207,9 @@ public class Game extends Pane {
             addMouseEventHandlers(card);
             getChildren().add(card);
         });
+
+        // Klondike setup solution, needs some rework, as the code is possibly not very nice.
+
         List<Card> shuffledDeck = stockPile.getCards();
         int index = 0;
         for (int i=0; i<tableauPiles.size(); i++) {
