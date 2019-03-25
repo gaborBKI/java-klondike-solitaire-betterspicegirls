@@ -78,8 +78,20 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //TODO
-        return true;
+        String card1Color = getCardColor(card1);
+        String card2Color = getCardColor(card2);
+
+        return card1Color.equals(card2Color);
+    }
+
+    //added a method that checks what color the card is based on its suit (diamond and hearts is read, other two are black
+
+    private static String getCardColor(Card card) {
+        if (card.suit == 1 || card.suit == 2) {
+            return "red";
+        } else {
+            return "black";
+        }
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
