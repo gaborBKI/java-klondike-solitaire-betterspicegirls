@@ -211,11 +211,11 @@ public class Game extends Pane {
         // Klondike setup solution, needs some rework, as the code is possibly not very nice.
 
         List<Card> shuffledDeck = stockPile.getCards();
-        int index = 0;
+        int index = shuffledDeck.size() - 1;
         for (int i=0; i<tableauPiles.size(); i++) {
             for(int j=0; j<i+1; j++) {
                 tableauPiles.get(i).addCard(shuffledDeck.get(index));
-                index++;
+                index--;
             }
             tableauPiles.get(i).getTopCard().flip();
         }
