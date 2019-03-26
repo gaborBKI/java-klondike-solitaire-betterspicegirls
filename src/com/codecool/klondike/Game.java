@@ -128,11 +128,13 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        //TODO
-        return true;
+        String cardColor = Card.getCardColor(card);
+        String targetCardColor = Card.getCardColor(destPile.getTopCard());
+        return !cardColor.equals(targetCardColor) && card.getRank() + 1 == destPile.getTopCard().getRank();
     }
+
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
-        Pile result = null;
+        Pile result = card.getContainingPile();
         for (Pile pile : piles) {
             if (!pile.equals(card.getContainingPile()) &&
                     isOverPile(card, pile) &&

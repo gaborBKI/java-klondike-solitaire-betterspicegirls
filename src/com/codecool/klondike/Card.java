@@ -86,7 +86,7 @@ public class Card extends ImageView {
 
     //added a method that checks what color the card is based on its suit (diamond and hearts is red, other two are black
 
-    private static String getCardColor(Card card) {
+    public static String getCardColor(Card card) {
         if (card.suit == 1 || card.suit == 2) {
             return "red";
         } else {
