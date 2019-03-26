@@ -128,6 +128,9 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
+        if(destPile.getPileType() == Pile.PileType.TABLEAU && destPile.isEmpty()){
+            return card.getRank() == 13;
+        }
         if(destPile.getPileType() == Pile.PileType.TABLEAU && !destPile.isEmpty()) {
             String cardColor = Card.getCardColor(card);
             String targetCardColor = Card.getCardColor(destPile.getTopCard());
