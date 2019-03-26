@@ -60,15 +60,36 @@ public class Game extends Pane {
         double offsetY = e.getSceneY() - dragStartY;
 
         draggedCards.clear();
-        draggedCards.add(card);
 
-        card.getDropShadow().setRadius(20);
-        card.getDropShadow().setOffsetX(10);
-        card.getDropShadow().setOffsetY(10);
+        if(activePile.getPileType() == Pile.PileType.TABLEAU) {
+            List<Card> pileCards = activePile.getCards();
+            for (int i = 0; i < pileCards.size(); i++) {
+                Card actualCard = pileCards.get(i);
+                if (!actualCard.isFaceDown()) {
+                    draggedCards.add(actualCard);
+                    actualCard.getDropShadow().setRadius(20);
+                    actualCard.getDropShadow().setOffsetX(10);
+                    actualCard.getDropShadow().setOffsetY(10);
 
-        card.toFront();
-        card.setTranslateX(offsetX);
-        card.setTranslateY(offsetY);
+                    actualCard.toFront();
+
+                    actualCard.setTranslateX(offsetX);
+                    actualCard.setTranslateY(offsetY);
+                }
+            }
+        } else {
+            draggedCards.add(card);
+            card.getDropShadow().setRadius(20);
+            card.getDropShadow().setOffsetX(10);
+            card.getDropShadow().setOffsetY(10);
+
+            card.toFront();
+
+            card.setTranslateX(offsetX);
+            card.setTranslateY(offsetY);
+        }
+        //draggedCards.add(card);
+
     };
 
     private EventHandler<MouseEvent> onMouseReleasedHandler = e -> {
@@ -83,11 +104,28 @@ public class Game extends Pane {
             pile = getValidIntersectingPile(card, tableauPiles);
         }
         //TODO
-        if (pile != null){
-            handleValidMove(card, pile);
+        if (isMoveValid(card, pile)){
+            for(Card draggedCard : draggedCards){
+                handleValidMove(draggedCard, pile);
+                draggedCard.moveToPile(pile);
+            }
+
+            // ÖSSZECSÚSZIK!
+
+            //MouseUtil.slideToDest(draggedCards, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+            draggedCards.clear();
+        }
+        draggedCards.clear();
+
+        for(Pile piles : tableauPiles){
+            if(!piles.isEmpty()) {
+                Card topCard = piles.getTopCard();
+                if (topCard.isFaceDown()) {
+                    topCard.flip();
+                }
+            }
         }
     };
 
@@ -189,20 +227,20 @@ public class Game extends Pane {
             msg = String.format("Placed %s to %s.", card, destPile.getTopCard());
         }
         System.out.println(msg);
-        MouseUtil.slideToDest(draggedCards, destPile);
-        draggedCards.clear();
-        card.moveToPile(destPile);
+        //MouseUtil.slideToDest(draggedCards, destPile);
+        //card.moveToPile(destPile);
+        //draggedCards.clear();
 
         // flip the last card on the tableau if it is face down after placing a card
 
-        for(Pile pile : tableauPiles){
+        /*for(Pile pile : tableauPiles){
             if(!pile.isEmpty()) {
                 Card topCard = pile.getTopCard();
                 if (topCard.isFaceDown()) {
                     topCard.flip();
                 }
             }
-        }
+        }*/
     }
 
 
