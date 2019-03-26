@@ -128,7 +128,10 @@ public class Game extends Pane {
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        if(destPile.getPileType() == Pile.PileType.TABLEAU) {
+        if(destPile.getPileType() == Pile.PileType.TABLEAU && destPile.isEmpty()){
+            return card.getRank() == 13;
+        }
+        if(destPile.getPileType() == Pile.PileType.TABLEAU && !destPile.isEmpty()) {
             String cardColor = Card.getCardColor(card);
             String targetCardColor = Card.getCardColor(destPile.getTopCard());
             return !cardColor.equals(targetCardColor) && card.getRank() + 1 == destPile.getTopCard().getRank();
@@ -182,6 +185,18 @@ public class Game extends Pane {
         System.out.println(msg);
         MouseUtil.slideToDest(draggedCards, destPile);
         draggedCards.clear();
+        card.moveToPile(destPile);
+
+        // flip the last card on the tableau if it is face down after placing a card
+
+        for(Pile pile : tableauPiles){
+            if(!pile.isEmpty()) {
+                Card topCard = pile.getTopCard();
+                if (topCard.isFaceDown()) {
+                    topCard.flip();
+                }
+            }
+        }
     }
 
 
