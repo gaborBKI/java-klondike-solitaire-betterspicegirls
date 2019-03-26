@@ -132,9 +132,23 @@ public class Game extends Pane {
             String cardColor = Card.getCardColor(card);
             String targetCardColor = Card.getCardColor(destPile.getTopCard());
             return !cardColor.equals(targetCardColor) && card.getRank() + 1 == destPile.getTopCard().getRank();
-        } else { // foundation pile here
-            return true;
         }
+        else if(destPile.getPileType() == Pile.PileType.FOUNDATION) { // thanks
+            if (destPile.isEmpty()){
+                if(card.getRank() ==1){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                int cardSuit = card.getSuit();
+                int targetCardSuit = destPile.getTopCard().getSuit();
+                return cardSuit == targetCardSuit && card.getRank() - 1 == destPile.getTopCard().getRank();
+            }
+        }
+        return true;
     }
 
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
