@@ -63,9 +63,10 @@ public class Game extends Pane {
 
         if(activePile.getPileType() == Pile.PileType.TABLEAU) {
             List<Card> pileCards = activePile.getCards();
+            int cardPosition = pileCards.indexOf(card);
             for (int i = 0; i < pileCards.size(); i++) {
                 Card actualCard = pileCards.get(i);
-                if (!actualCard.isFaceDown()) {
+                if (!actualCard.isFaceDown() && pileCards.indexOf(actualCard) >= cardPosition) {
                     draggedCards.add(actualCard);
                     actualCard.getDropShadow().setRadius(20);
                     actualCard.getDropShadow().setOffsetX(10);
