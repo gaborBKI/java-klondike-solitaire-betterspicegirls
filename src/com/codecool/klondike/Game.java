@@ -75,9 +75,15 @@ public class Game extends Pane {
         if (draggedCards.isEmpty())
             return;
         Card card = (Card) e.getSource();
-        Pile pile = getValidIntersectingPile(card, tableauPiles);
+        Pile pile;
+        double Y = e.getSceneY();
+        if(Y < 250){
+            pile = getValidIntersectingPile(card, foundationPiles);
+        } else {
+            pile = getValidIntersectingPile(card, tableauPiles);
+        }
         //TODO
-        if (pile != null) {
+        if (pile != null){
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
@@ -136,6 +142,9 @@ public class Game extends Pane {
             String targetCardColor = Card.getCardColor(destPile.getTopCard());
             return !cardColor.equals(targetCardColor) && card.getRank() + 1 == destPile.getTopCard().getRank();
         } else { // foundation pile here
+            if(destPile.getPileType() == Pile.PileType.FOUNDATION){
+                return true;
+            }
             return true;
         }
     }
