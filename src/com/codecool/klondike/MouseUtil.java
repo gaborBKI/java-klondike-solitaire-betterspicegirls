@@ -16,9 +16,9 @@ import javafx.util.Duration;
 
 import java.util.List;
 
-public class MouseUtil {
+class MouseUtil {
 
-    public static void slideBack(Card card) {
+    static void slideBack(Card card) {
         double sourceX = card.getLayoutX() + card.getTranslateX();
         double sourceY = card.getLayoutY() + card.getTranslateY();
         double targetX = card.getLayoutX();

@@ -18,12 +18,12 @@ public class Pile extends Pane {
     private double cardGap;
     private ObservableList<Card> cards = FXCollections.observableArrayList();
 
-    public Pile(PileType pileType, String name, double cardGap) {
+    Pile(PileType pileType, String name, double cardGap) {
         this.pileType = pileType;
         this.cardGap = cardGap;
     }
 
-    public PileType getPileType() {
+    PileType getPileType() {
         return pileType;
     }
 
@@ -35,7 +35,7 @@ public class Pile extends Pane {
         return cardGap;
     }
 
-    public ObservableList<Card> getCards() {
+    ObservableList<Card> getCards() {
         return cards;
     }
 
@@ -43,15 +43,15 @@ public class Pile extends Pane {
         return cards.size();
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return cards.isEmpty();
     }
 
-    public void clear() {
+    void clear() {
         cards.clear();
     }
 
-    public void addCard(Card card) {
+    void addCard(Card card) {
         cards.add(card);
         card.setContainingPile(this);
         card.toFront();
@@ -66,14 +66,14 @@ public class Pile extends Pane {
         card.setLayoutY(getLayoutY() + (cards.size() - 1) * cardGap);
     }
 
-    public Card getTopCard() {
+    Card getTopCard() {
         if (cards.isEmpty())
             return null;
         else
             return cards.get(cards.size() - 1);
     }
 
-    public void setBlurredBackground() {
+    void setBlurredBackground() {
         setPrefSize(Card.WIDTH, Card.HEIGHT);
         BackgroundFill backgroundFill = new BackgroundFill(Color.gray(0.0, 0.2), null, null);
         Background background = new Background(backgroundFill);
@@ -82,7 +82,7 @@ public class Pile extends Pane {
         setEffect(gaussianBlur);
     }
 
-    public int getSize() {
+    int getSize() {
         return cards.size();
     }
 
