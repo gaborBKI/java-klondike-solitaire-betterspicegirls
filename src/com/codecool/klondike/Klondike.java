@@ -8,6 +8,11 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+import java.net.URISyntaxException;
+
 import javafx.event.EventHandler;
 
 public class Klondike extends Application {
@@ -34,6 +39,16 @@ public class Klondike extends Application {
                 }
             }
             });
+
+        Media sound = null;
+        try {
+            sound = new Media(getClass().getResource("/music.wav").toURI().toString());
+        }catch(URISyntaxException e){
+            e.printStackTrace();
+        }
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+
         Game game = new Game();
         game.getChildren().add(restart);
         game.setTableBackground(new Image("/table/green.png"));
