@@ -82,6 +82,10 @@ public class Pile extends Pane {
         setEffect(gaussianBlur);
     }
 
+    public int getSize() {
+        return cards.size();
+    }
+
     public enum PileType {
         STOCK,
         DISCARD,
