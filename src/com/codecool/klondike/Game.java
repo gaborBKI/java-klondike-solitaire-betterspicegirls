@@ -69,7 +69,7 @@ public class Game extends Pane {
             if (!pile.isEmpty()){
                 int topCardRank = pile.getTopCard().getRank();
                 int topCardSuite = pile.getTopCard().getSuit();
-                if (cardRank - 1 == topCardRank) {            //need to add suite compering
+                if (cardRank - 1 == topCardRank && cardSuite == topCardSuite) {
                     //pile.addCard(card);
                     handleValidMove(card, pile);
                     card.moveToPile(pile);
