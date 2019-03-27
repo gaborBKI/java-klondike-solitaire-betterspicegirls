@@ -31,37 +31,6 @@ public class MouseUtil {
                 });
     }
 
-    public static void slideToDest(List<Card> cardsToSlide, Pile destPile) {
-        if (cardsToSlide == null)
-            return;
-        double destCardGap = destPile.getCardGap();
-        double targetX;
-        double targetY;
-
-        if (destPile.isEmpty()) {
-            targetX = destPile.getLayoutX();
-            targetY = destPile.getLayoutY();
-        } else {
-            targetX = destPile.getTopCard().getLayoutX();
-            targetY = destPile.getTopCard().getLayoutY();
-        }
-
-        for (int i = 0; i < cardsToSlide.size(); i++) {
-            Card currentCard = cardsToSlide.get(i);
-            double sourceX = currentCard.getLayoutX() + currentCard.getTranslateX();
-            double sourceY = currentCard.getLayoutY() + currentCard.getTranslateY();
-
-            animateCardMovement(currentCard, sourceX, sourceY, targetX,
-                    targetY + ((destPile.isEmpty() ? i : i + 1) * destCardGap), Duration.millis(150),
-                    e -> {
-                        currentCard.moveToPile(destPile);
-                        currentCard.getDropShadow().setRadius(2);
-                        currentCard.getDropShadow().setOffsetX(0);
-                        currentCard.getDropShadow().setOffsetY(0);
-                    });
-        }
-    }
-
     private static void animateCardMovement(
             Card card, double sourceX, double sourceY,
             double targetX, double targetY, Duration duration,
@@ -99,5 +68,36 @@ public class MouseUtil {
                     y - node.getLayoutY() + node.getLayoutBounds().getHeight() / 2);
         }
     }
+
+    /*public static void slideToDest(List<Card> cardsToSlide, Pile destPile) {
+        if (cardsToSlide == null)
+            return;
+        double destCardGap = destPile.getCardGap();
+        double targetX;
+        double targetY;
+
+        if (destPile.isEmpty()) {
+            targetX = destPile.getLayoutX();
+            targetY = destPile.getLayoutY();
+        } else {
+            targetX = destPile.getTopCard().getLayoutX();
+            targetY = destPile.getTopCard().getLayoutY();
+        }
+
+        for (int i = 0; i < cardsToSlide.size(); i++) {
+            Card currentCard = cardsToSlide.get(i);
+            double sourceX = currentCard.getLayoutX() + currentCard.getTranslateX();
+            double sourceY = currentCard.getLayoutY() + currentCard.getTranslateY();
+
+            animateCardMovement(currentCard, sourceX, sourceY, targetX,
+                    targetY + ((destPile.isEmpty() ? i : i + 1) * destCardGap), Duration.millis(150),
+                    e -> {
+                        currentCard.moveToPile(destPile);
+                        currentCard.getDropShadow().setRadius(2);
+                        currentCard.getDropShadow().setOffsetX(0);
+                        currentCard.getDropShadow().setOffsetY(0);
+                    });
+        }
+    }*/
 
 }
