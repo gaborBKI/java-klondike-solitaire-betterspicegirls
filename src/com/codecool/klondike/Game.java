@@ -36,7 +36,9 @@ public class Game extends Pane {
         if (e.getClickCount() == 2) {
             System.out.println("double clicked");
             Card card = (Card) e.getSource();
-            if (card.getContainingPile().getPileType() == Pile.PileType.TABLEAU && card.equals(getValidIntersectingPile(card, tableauPiles).getTopCard())) {
+            Card tableuTop = getValidIntersectingPile(card, tableauPiles).getTopCard();
+            Pile.PileType cardPile = card.getContainingPile().getPileType();
+            if (cardPile == Pile.PileType.TABLEAU || cardPile == Pile.PileType.DISCARD && card.equals(tableuTop)) {
                 int cardRank = card.getRank();
                 int cardSuite = card.getSuit();
                 if (cardRank == 1) {
