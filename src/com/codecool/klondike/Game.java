@@ -34,19 +34,22 @@ public class Game extends Pane {
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
         if (e.getClickCount() == 2) {
-            System.out.println("double clicked");
             Card card = (Card) e.getSource();
-            Card tableauTop = getValidIntersectingPile(card, tableauPiles).getTopCard();
-            Pile.PileType cardPile = card.getContainingPile().getPileType();
-            if (cardPile == Pile.PileType.TABLEAU || cardPile == Pile.PileType.DISCARD && card.equals(tableauTop)) {
-                int cardRank = card.getRank();
-                int cardSuite = card.getSuit();
-                if (cardRank == 1) {
-                    findEmptyPile(card);
-                } else {
-                    placeCardInFoundation(card, cardRank, cardSuite);
+            if(card == card.getContainingPile().getTopCard()) {
+                Card tableauTop = getValidIntersectingPile(card, tableauPiles).getTopCard();
+                Pile.PileType cardPile = card.getContainingPile().getPileType();
+                if (cardPile == Pile.PileType.TABLEAU || cardPile == Pile.PileType.DISCARD && card.equals(tableauTop)) {
+                    int cardRank = card.getRank();
+                    int cardSuite = card.getSuit();
+                    if (cardRank == 1) {
+                        findEmptyPile(card);
+                    } else {
+                        placeCardInFoundation(card, cardRank, cardSuite);
+                    }
+                    flipTableauTopCard();
                 }
-                flipTableauTopCard();
+            } else {
+                return;
             }
         }
         Card card = (Card) e.getSource();
