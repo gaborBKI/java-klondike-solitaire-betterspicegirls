@@ -118,7 +118,7 @@ public class Game extends Pane {
         flipTableauTopCard();
     };
 
-    public void addMouseEventHandlers(Card card) {
+    private void addMouseEventHandlers(Card card) {
         card.setOnMousePressed(onMousePressedHandler);
         card.setOnMouseDragged(onMouseDraggedHandler);
         card.setOnMouseReleased(onMouseReleasedHandler);
@@ -127,7 +127,7 @@ public class Game extends Pane {
 
     // handling double click event
 
-    public void placeCardInFoundation(Card card, int cardRank, int cardSuite){
+    private void placeCardInFoundation(Card card, int cardRank, int cardSuite){
         for ( Pile pile: foundationPiles) {
             if (!pile.isEmpty()){
                 int topCardRank = pile.getTopCard().getRank();
@@ -141,7 +141,7 @@ public class Game extends Pane {
         }
     }
 
-    public void findEmptyPile(Card card){
+    private void findEmptyPile(Card card){
         for (Pile pile: foundationPiles){
             if(pile.isEmpty()){
                 handleValidMove(card, pile);
@@ -150,7 +150,7 @@ public class Game extends Pane {
         }
     }
 
-    public void refillStockFromDiscard() {
+    private void refillStockFromDiscard() {
 
         if(stockPile.isEmpty()) {
             System.out.println("Stock refilled from discard pile.");
@@ -173,7 +173,7 @@ public class Game extends Pane {
             return card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent());
     }
 
-    public boolean isMoveValid(Card card, Pile destPile) {
+    private boolean isMoveValid(Card card, Pile destPile) {
         if(destPile.getPileType() == Pile.PileType.TABLEAU && destPile.isEmpty()){
             return card.getRank() == 13;
         }
@@ -218,7 +218,9 @@ public class Game extends Pane {
         }
         System.out.println(msg);
         card.moveToPile(destPile);
-        isGameWon();
+        if(isGameWon()){
+            showPopUp();
+        }
         //MouseUtil.slideToDest(draggedCards, destPile);
     }
 
@@ -235,12 +237,15 @@ public class Game extends Pane {
 
     // checking for victory
 
-    public boolean isGameWon() {
+    private boolean isGameWon() {
         for (Pile foundationPile : foundationPiles) {
             int size = foundationPile.getSize();
             if (size != 13) return false;
         }
+        return true;
+    }
 
+    private void showPopUp() {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         VBox dialogVbox = new VBox(20);
@@ -248,12 +253,11 @@ public class Game extends Pane {
         Scene dialogScene = new Scene(dialogVbox, 300, 200);
         dialog.setScene(dialogScene);
         dialog.show();
-        return true;
     }
 
     // initializing game elements such as: piles, cards and background
 
-    public Game() {
+    Game() {
         deck = Card.createNewDeck();
         initPiles();
         dealCards();
@@ -299,7 +303,7 @@ public class Game extends Pane {
         actualCard.setTranslateY(offsetY);
     }
 
-    public void dealCards() {
+    private void dealCards() {
         Iterator<Card> deckIterator = deck.iterator();
         deckIterator.forEachRemaining(card -> {
             stockPile.addCard(card);
@@ -318,7 +322,7 @@ public class Game extends Pane {
         }
     }
 
-    public void setTableBackground(Image tableBackground) {
+    void setTableBackground(Image tableBackground) {
         setBackground(new Background(new BackgroundImage(tableBackground,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
