@@ -3,15 +3,15 @@ package com.codecool.klondike;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.util.*;
 
@@ -74,7 +74,7 @@ public class Game extends Pane {
                 if (cardRank - 1 == topCardRank && cardSuite == topCardSuite) {
                     //pile.addCard(card);
                     handleValidMove(card, pile);
-                    card.moveToPile(pile);
+                    //card.moveToPile(pile);
                     System.out.println("The Magic happened");
                 }
             }
@@ -84,7 +84,7 @@ public class Game extends Pane {
     public void findEmptyPile(Card card){
         for (Pile pile: foundationPiles){
             if(pile.isEmpty()){
-                card.moveToPile(pile);
+                // card.moveToPile(pile);
                 handleValidMove(card, pile);
                 break;
             }
@@ -157,7 +157,7 @@ public class Game extends Pane {
         if (isMoveValid(card, pile)){
             for(Card draggedCard : draggedCards){
                 handleValidMove(draggedCard, pile);
-                draggedCard.moveToPile(pile);
+                // draggedCard.moveToPile(pile);
             }
 
             // ÖSSZECSÚSZIK!
@@ -181,7 +181,23 @@ public class Game extends Pane {
 
     public boolean isGameWon() {
         //TODO
-        return false;
+        System.out.println("check won");
+        System.out.println(foundationPiles.size());
+        for (int i = 0; i < foundationPiles.size(); i++) {
+            int size = foundationPiles.get(i).getSize();
+            System.out.println(size);
+            if ( size != 13) return false;
+        }
+
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        // dialog.initOwner(primaryStage);
+        VBox dialogVbox = new VBox(20);
+        dialogVbox.getChildren().add(new Text("Congratulations! You won the game!"));
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        dialog.setScene(dialogScene);
+        dialog.show();
+        return true;
     }
 
     public Game() {
@@ -205,6 +221,7 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
+
         //TODO
         if(stockPile.isEmpty()) {
             System.out.println("Stock refilled from discard pile.");
@@ -284,6 +301,8 @@ public class Game extends Pane {
             msg = String.format("Placed %s to %s.", card, destPile.getTopCard());
         }
         System.out.println(msg);
+        card.moveToPile(destPile);
+        isGameWon();
         //MouseUtil.slideToDest(draggedCards, destPile);
         //card.moveToPile(destPile);
         //draggedCards.clear();
