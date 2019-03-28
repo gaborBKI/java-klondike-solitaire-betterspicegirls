@@ -174,25 +174,29 @@ public class Game extends Pane {
     // auto-place cards
 
     private void autoPlaceFlippedCards() {
+        int run = 7;
         List<Card> flippedCards = FXCollections.observableArrayList();
-        for (Pile pile : tableauPiles) {
-            for (Card card : pile.getCards()){
-                if (!card.isFaceDown()) {
-                    flippedCards.add(pile.getTopCard());
-                }
-            }
-        }
 
         if(!discardPile.getTopCard().isFaceDown()) {
             flippedCards.add(discardPile.getTopCard());
         }
 
-        for (Card card : flippedCards) {
-            System.out.println(card);
-            int cardRank = card.getRank();
-            int cardSuite = card.getSuit();
-            placeCardInFoundation(card, cardRank, cardSuite);
-            flipTableauTopCard();
+        while(run>0){
+            for (Pile pile : tableauPiles) {
+                for (Card card : pile.getCards()){
+                    if (!card.isFaceDown()) {
+                        flippedCards.add(pile.getTopCard());
+                    }
+                }
+            }
+
+            for (Card card : flippedCards) {
+                int cardRank = card.getRank();
+                int cardSuite = card.getSuit();
+                placeCardInFoundation(card, cardRank, cardSuite);
+                flipTableauTopCard();
+            }
+            run--;
         }
     }
 
