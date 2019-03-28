@@ -30,13 +30,13 @@ public class Klondike extends Application {
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
 
         Button restart = new Button("Restart");
-        setButtonDimensions(restart, 500, 850);
+        setButtonDimensions(restart, 520, 850);
 
         Button moveCardsUp = new Button("Beam me up Scotty!");
         setButtonDimensions(moveCardsUp, 700, 850);
 
-        Button silence = new Button("Shut the f*** up!");
-        setButtonDimensions(silence, 570, 850);
+        Button silence = new Button("Not now Lou!");
+        setButtonDimensions(silence, 590, 850);
 
         mediaPlayer.play();
 
