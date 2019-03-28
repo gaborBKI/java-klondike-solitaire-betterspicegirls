@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -32,8 +34,8 @@ public class Klondike extends Application {
         Button restart = new Button("Restart");
         setButtonDimensions(restart, 520, 850);
 
-        Button moveCardsUp = new Button("Beam me up Scotty!");
-        setButtonDimensions(moveCardsUp, 700, 850);
+        Button moveCardsUp = new Button("Auto");
+        setButtonDimensions(moveCardsUp, 500, 100);
 
         Button silence = new Button("Not now Lou!");
         setButtonDimensions(silence, 590, 850);
@@ -56,8 +58,14 @@ public class Klondike extends Application {
             }
         });
 
+
         primaryStage.setTitle("Klondike Solitaire");
         primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));
+        game.addEventFilter(KeyEvent.KEY_PRESSED, event->{
+            if (event.getCode() == KeyCode.SPACE) {
+                game.autoPlaceFlippedCards();
+            }
+        });
         primaryStage.show();
 
     }

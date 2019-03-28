@@ -130,7 +130,7 @@ public class Game extends Pane {
         card.setOnMouseClicked(onMouseClickedHandler);
     }
 
-    // handling double click event
+    /* handling double click event */
 
     private void placeCardInFoundation(Card card, int cardRank, int cardSuite){
         for ( Pile pile: foundationPiles) {
@@ -167,9 +167,9 @@ public class Game extends Pane {
         }
     }
 
-    // auto-place cards
+    /* auto-place cards */
 
-    private void autoPlaceFlippedCards() {
+    void autoPlaceFlippedCards() {
         int run = 7;
         List<Card> flippedCards = FXCollections.observableArrayList();
 
@@ -201,7 +201,7 @@ public class Game extends Pane {
         flipTableauTopCard();
     }
 
-    // handling card dragging
+    /* handling card dragging */
 
     private boolean isOverPile(Card card, Pile pile) {
         if (pile.isEmpty())
@@ -271,7 +271,7 @@ public class Game extends Pane {
         }
     }
 
-    // checking for victory
+    /* checking for victory */
 
     private boolean isGameWon() {
         for (Pile foundationPile : foundationPiles) {
@@ -291,7 +291,7 @@ public class Game extends Pane {
         dialog.show();
     }
 
-    // initializing game elements such as: piles, cards and background
+    /* initializing game elements such as: piles, cards and background */
 
     Game() {
         deck = Card.createNewDeck();
