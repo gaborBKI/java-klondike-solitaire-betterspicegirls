@@ -196,10 +196,11 @@ public class Game extends Pane {
                 } else {
                     placeCardInFoundation(card, cardRank, cardSuite);
                 }
-                flipTableauTopCard();
+
             }
             run--;
         }
+        flipTableauTopCard();
     }
 
     // handling card dragging
