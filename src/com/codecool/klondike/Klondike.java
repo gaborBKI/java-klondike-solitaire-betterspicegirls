@@ -26,34 +26,18 @@ public class Klondike extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        Media sound = null;
-        try {
-            sound = new Media(getClass().getResource("/music2.wav").toURI().toString());
-        }catch(URISyntaxException e){
-            e.printStackTrace();
-        }
+        Media sound = setSound();
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
-        Card.loadCardImages();
-        Button restart = new Button("Restart");
-        restart.setLayoutX(500);
-        restart.setLayoutY(700);
-        restart.setOnMouseClicked(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent mouseEvent){
-                if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                    mediaPlayer.stop();
-                    start(primaryStage);
-                }
-            }
-            });
 
-        //mediaPlayer.play();
+        Button restart = new Button("Restart");
+        setButtonDimensions(restart, 500, 850);
 
         Button moveCardsUp = new Button("Beam me up Scotty!");
-        moveCardsUp.setLayoutX(700);
-        moveCardsUp.setLayoutY(700);
+        setButtonDimensions(moveCardsUp, 700, 850);
 
+        mediaPlayer.play();
 
+        Card.loadCardImages();
         Game game = new Game();
         game.getChildren().add(restart);
         game.getChildren().add(moveCardsUp);
@@ -61,10 +45,32 @@ public class Klondike extends Application {
 
         moveCardsUp.setOnMouseClicked(game.buttonClickHandler);
 
+        restart.setOnMouseClicked(mouseEvent -> {
+            if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                mediaPlayer.stop();
+                start(primaryStage);
+            }
+        });
+
         primaryStage.setTitle("Klondike Solitaire");
         primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));
         primaryStage.show();
 
+    }
+
+    private Media setSound() {
+        Media sound = null;
+        try {
+            sound = new Media(getClass().getResource("/music2.wav").toURI().toString());
+        }catch(URISyntaxException e){
+            e.printStackTrace();
+        }
+        return sound;
+    }
+
+    private void setButtonDimensions(Button button, int coordinateX, int coordinateY) {
+        button.setLayoutX(coordinateX);
+        button.setLayoutY(coordinateY);
     }
 
 }
