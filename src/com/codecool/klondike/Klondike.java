@@ -52,7 +52,7 @@ public class Klondike extends Application {
 
         Game game = new Game();
         game.getChildren().add(restart);
-        game.setTableBackground(new Image("/table/green.png"));
+        game.setTableBackground(new Image("/table/pink.jpg"));
 
 
         primaryStage.setTitle("Klondike Solitaire");
