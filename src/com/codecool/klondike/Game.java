@@ -58,7 +58,6 @@ public class Game extends Pane {
             card.moveToPile(discardPile);
             card.flip();
             card.setMouseTransparent(false);
-            System.out.println("Placed " + card + " to the waste.");
         }
     };
 
@@ -142,7 +141,6 @@ public class Game extends Pane {
                 int topCardSuite = pile.getTopCard().getSuit();
                 if (cardRank - 1 == topCardRank && cardSuite == topCardSuite) {
                     handleValidMove(card, pile);
-                    System.out.println("The Magic happened");
                 }
             }
         }
@@ -256,7 +254,6 @@ public class Game extends Pane {
         } else {
             msg = String.format("Placed %s to %s.", card, destPile.getTopCard());
         }
-        System.out.println(msg);
         card.moveToPile(destPile);
         if(isGameWon()){
             showPopUp();

@@ -43,7 +43,6 @@ public class Klondike extends Application {
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                     mediaPlayer.stop();
                     start(primaryStage);
-                    System.out.println("Yaay first step taken");
                 }
             }
             });
