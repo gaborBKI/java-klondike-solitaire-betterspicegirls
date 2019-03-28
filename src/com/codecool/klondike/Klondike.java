@@ -26,6 +26,13 @@ public class Klondike extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Media sound = null;
+        try {
+            sound = new Media(getClass().getResource("/music.wav").toURI().toString());
+        }catch(URISyntaxException e){
+            e.printStackTrace();
+        }
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
         Card.loadCardImages();
         Button restart = new Button("Restart");
         restart.setLayoutX(600);
@@ -34,19 +41,13 @@ public class Klondike extends Application {
             @Override
             public void handle(MouseEvent mouseEvent){
                 if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                    mediaPlayer.stop();
                     start(primaryStage);
                     System.out.println("Yaay first step taken");
                 }
             }
             });
 
-        Media sound = null;
-        try {
-            sound = new Media(getClass().getResource("/music.wav").toURI().toString());
-        }catch(URISyntaxException e){
-            e.printStackTrace();
-        }
-        MediaPlayer mediaPlayer = new MediaPlayer(sound);
         mediaPlayer.play();
 
         Game game = new Game();
