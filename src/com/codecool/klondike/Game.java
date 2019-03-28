@@ -177,7 +177,7 @@ public class Game extends Pane {
         int run = 7;
         List<Card> flippedCards = FXCollections.observableArrayList();
 
-        if(!discardPile.getTopCard().isFaceDown()) {
+        if(discardPile.getTopCard() != null && !discardPile.getTopCard().isFaceDown()) {
             flippedCards.add(discardPile.getTopCard());
         }
 
@@ -193,7 +193,11 @@ public class Game extends Pane {
             for (Card card : flippedCards) {
                 int cardRank = card.getRank();
                 int cardSuite = card.getSuit();
-                placeCardInFoundation(card, cardRank, cardSuite);
+                if (cardRank == 1) {
+                    findEmptyPile(card);
+                } else {
+                    placeCardInFoundation(card, cardRank, cardSuite);
+                }
                 flipTableauTopCard();
             }
             run--;
