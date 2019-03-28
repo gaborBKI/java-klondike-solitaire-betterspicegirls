@@ -35,8 +35,8 @@ public class Klondike extends Application {
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
         Card.loadCardImages();
         Button restart = new Button("Restart");
-        restart.setLayoutX(600);
-        restart.setLayoutY(650);
+        restart.setLayoutX(500);
+        restart.setLayoutY(700);
         restart.setOnMouseClicked(new EventHandler<MouseEvent>(){
             @Override
             public void handle(MouseEvent mouseEvent){
@@ -48,12 +48,19 @@ public class Klondike extends Application {
             }
             });
 
-        mediaPlayer.play();
+        //mediaPlayer.play();
+
+        Button moveCardsUp = new Button("Beam me up Scotty!");
+        moveCardsUp.setLayoutX(700);
+        moveCardsUp.setLayoutY(700);
+
 
         Game game = new Game();
         game.getChildren().add(restart);
+        game.getChildren().add(moveCardsUp);
         game.setTableBackground(new Image("/table/pink.jpg"));
 
+        moveCardsUp.setOnMouseClicked(game.buttonClickHandler);
 
         primaryStage.setTitle("Klondike Solitaire");
         primaryStage.setScene(new Scene(game, WINDOW_WIDTH, WINDOW_HEIGHT));

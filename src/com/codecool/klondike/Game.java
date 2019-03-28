@@ -5,6 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -121,6 +122,10 @@ public class Game extends Pane {
         flipTableauTopCard();
     };
 
+    EventHandler<MouseEvent> buttonClickHandler = e -> {
+        autoPlaceFlippedCards();
+    };
+
     private void addMouseEventHandlers(Card card) {
         card.setOnMousePressed(onMousePressedHandler);
         card.setOnMouseDragged(onMouseDraggedHandler);
@@ -136,7 +141,6 @@ public class Game extends Pane {
                 int topCardRank = pile.getTopCard().getRank();
                 int topCardSuite = pile.getTopCard().getSuit();
                 if (cardRank - 1 == topCardRank && cardSuite == topCardSuite) {
-                    //pile.addCard(card);
                     handleValidMove(card, pile);
                     System.out.println("The Magic happened");
                 }
@@ -164,6 +168,31 @@ public class Game extends Pane {
                 stockPile.addCard(card);
             }
             discardPile.clear();
+        }
+    }
+
+    // auto-place cards
+
+    private void autoPlaceFlippedCards() {
+        List<Card> flippedCards = FXCollections.observableArrayList();
+        for (Pile pile : tableauPiles) {
+            for (Card card : pile.getCards()){
+                if (!card.isFaceDown()) {
+                    flippedCards.add(pile.getTopCard());
+                }
+            }
+        }
+
+        if(!discardPile.getTopCard().isFaceDown()) {
+            flippedCards.add(discardPile.getTopCard());
+        }
+
+        for (Card card : flippedCards) {
+            System.out.println(card);
+            int cardRank = card.getRank();
+            int cardSuite = card.getSuit();
+            placeCardInFoundation(card, cardRank, cardSuite);
+            flipTableauTopCard();
         }
     }
 
