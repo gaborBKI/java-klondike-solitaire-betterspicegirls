@@ -35,16 +35,20 @@ public class Klondike extends Application {
         Button moveCardsUp = new Button("Beam me up Scotty!");
         setButtonDimensions(moveCardsUp, 700, 850);
 
+        Button silence = new Button("Shut the f*** up!");
+        setButtonDimensions(silence, 570, 850);
+
         mediaPlayer.play();
 
         Card.loadCardImages();
         Game game = new Game();
         game.getChildren().add(restart);
         game.getChildren().add(moveCardsUp);
+        game.getChildren().add(silence);
         game.setTableBackground(new Image("/table/pink.jpg"));
 
         moveCardsUp.setOnMouseClicked(game.buttonClickHandler);
-
+        silence.setOnMouseClicked(mouseEvent -> mediaPlayer.stop());
         restart.setOnMouseClicked(mouseEvent -> {
             if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
                 mediaPlayer.stop();

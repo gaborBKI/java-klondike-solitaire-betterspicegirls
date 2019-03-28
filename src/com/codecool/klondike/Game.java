@@ -121,9 +121,7 @@ public class Game extends Pane {
         flipTableauTopCard();
     };
 
-    EventHandler<MouseEvent> buttonClickHandler = e -> {
-        autoPlaceFlippedCards();
-    };
+    EventHandler<MouseEvent> buttonClickHandler = e -> autoPlaceFlippedCards();
 
     private void addMouseEventHandlers(Card card) {
         card.setOnMousePressed(onMousePressedHandler);
