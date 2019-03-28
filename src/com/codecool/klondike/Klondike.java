@@ -28,7 +28,7 @@ public class Klondike extends Application {
     public void start(Stage primaryStage) {
         Media sound = null;
         try {
-            sound = new Media(getClass().getResource("/music.wav").toURI().toString());
+            sound = new Media(getClass().getResource("/music2.wav").toURI().toString());
         }catch(URISyntaxException e){
             e.printStackTrace();
         }
